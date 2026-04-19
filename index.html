@@ -414,6 +414,37 @@ footer a { color:var(--p); text-decoration:none; }
 }
 @keyframes ff-blink{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(1.5)}}
 
+/* =========================================
+   FF LIGHTBOX (Tap to Zoom)
+   ========================================= */
+#ff-lightbox {
+  display:none; position:fixed; inset:0; z-index:999999;
+  background:rgba(0,0,0,.92); backdrop-filter:blur(12px);
+  align-items:center; justify-content:center; cursor:zoom-out;
+}
+#ff-lightbox.open { display:flex; animation:lbIn .25s ease; }
+@keyframes lbIn { from{opacity:0;transform:scale(.85)} to{opacity:1;transform:scale(1)} }
+#ff-lightbox img {
+  max-width:90vw; max-height:85vh; border-radius:50%;
+  border:4px solid #ff4500; box-shadow:0 0 60px #ff4500, 0 0 120px rgba(255,140,0,.4);
+  object-fit:cover; width:340px; height:340px;
+  animation:lbSpin .5s ease;
+}
+@keyframes lbSpin { from{transform:scale(.6) rotate(-8deg)} to{transform:scale(1) rotate(0)} }
+#ff-lightbox .lb-close {
+  position:absolute; top:18px; right:22px; color:#ff4500; font-size:2.2rem;
+  font-family:var(--fd); cursor:pointer; line-height:1;
+  text-shadow:0 0 10px #ff4500; transition:.2s;
+}
+#ff-lightbox .lb-close:hover { transform:scale(1.2); }
+#ff-lightbox .lb-name {
+  position:absolute; bottom:30px; left:50%; transform:translateX(-50%);
+  font-family:var(--fd); font-size:1.1rem; font-weight:900; letter-spacing:.15em;
+  background:linear-gradient(135deg,#ffd700,#ff4500); -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent; white-space:nowrap;
+}
+.ff-av-spin { cursor:zoom-in; }
+
 /* FF identity */
 .ff-pname {
   font-family:'Orbitron',monospace; font-size:1.6rem; font-weight:900; line-height:1;
@@ -538,7 +569,7 @@ footer a { color:var(--p); text-decoration:none; }
 
 <!-- NAVIGATION -->
 <nav>
-  <div class="n-logo">SIDHI.DEV</div>
+  <div class="n-logo">HARRY.DEV</div>
   <ul class="n-links" id="n-links">
     <li><a href="#hero">HOME</a></li>
     <li><a href="#projects">PROJECTS</a></li>
@@ -1245,6 +1276,13 @@ footer a { color:var(--p); text-decoration:none; }
   </div>
 
 </section>
+<!-- FF LIGHTBOX MODAL -->
+<div id="ff-lightbox" onclick="closeFfLightbox()">
+  <span class="lb-close" onclick="closeFfLightbox()">✕</span>
+  <img id="ff-lb-img" src="ff.jpg" alt="HARRY FF"
+    onerror="this.src='';this.style.background='linear-gradient(135deg,#2a0d00,#ff4500)';this.style.display='flex';this.alt='🎮'">
+  <div class="lb-name">🔥 HARRY — Free Fire 🔥</div>
+</div>
 </main>
 
 <!-- ==================== FREE FIRE PROFILE ==================== -->
@@ -1267,10 +1305,10 @@ footer a { color:var(--p); text-decoration:none; }
           <div class="ffc-stripe"></div>
           <div style="display:flex;align-items:flex-start;gap:14px;margin-bottom:14px;">
             <div style="position:relative;flex-shrink:0;">
-              <div class="ff-av-spin">
+              <div class="ff-av-spin" onclick="openFfLightbox()" title="Tap to zoom 🔍">
                 <div class="ff-av-inner">
                   <!-- ff.jpg = apni FF photo (same folder mein rakhna) -->
-                  <img src="ff.jpg" alt="SIDHI FF"
+                  <img src="ff.jpg" alt="ᴅꫝʀᴋ_Ᏼʟꫝʓє"
                     onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#2a0d00,#ff4500)';this.parentElement.innerHTML+='<div style=\'display:flex;align-items:center;justify-content:center;height:86px;font-size:2.5rem\'>🎮</div>'">
                 </div>
               </div>
@@ -1278,16 +1316,16 @@ footer a { color:var(--p); text-decoration:none; }
             </div>
             <div class="identity" style="flex:1;padding-top:3px;">
               <!-- ✏️ Naam badlo -->
-              <div class="ff-pname">SIDHI</div>
+              <div class="ff-pname">ᴅꫝʀᴋ_Ᏼʟꫝʓє</div>
               <div class="ff-uid-row">
                 <span class="ff-uid-lbl">UID</span>
                 <!-- ✏️ UID badlo -->
-                <span class="ff-uid-val" id="ff-uid-val">1234567890</span>
+                <span class="ff-uid-val" id="ff-uid-val">605458977</span>
                 <button class="ff-uid-copy" onclick="ffCopyUID()">📋 Copy</button>
               </div>
               <div class="ff-badges">
                 <!-- ✏️ Rank badlo -->
-                <span class="ff-badge ff-b-gm">🏆 Grandmaster</span>
+                <span class="ff-badge ff-b-gm">🏆 Master</span>
                 <span class="ff-badge ff-b-in">🌏 India</span>
                 <span class="ff-badge ff-b-ok">✔ Verified</span>
               </div>
@@ -1299,7 +1337,7 @@ footer a { color:var(--p); text-decoration:none; }
             <div class="ff-vet-icon">🎖️</div>
             <div class="ff-vet-center">
               <!-- ✏️ Number badlo — "7" ko apna karo -->
-              <div><span class="ff-yr-num">7 YEAR</span></div>
+              <div><span class="ff-yr-num">7 YEAR OLD</span></div>
               <div class="ff-yr-sub">Veteran Player · Free Fire Legacy</div>
             </div>
             <div class="ff-vet-icon">🎖️</div>
@@ -1315,7 +1353,7 @@ footer a { color:var(--p); text-decoration:none; }
             <div class="ff-gf-info">
               <div class="ff-gf-lbl">In-Game Partner ❤️</div>
               <!-- ✏️ GF naam badlo -->
-              <div class="ff-gf-name">PRIYA 💕</div>
+              <div class="ff-gf-name">Woong 💕</div>
             </div>
             <div class="ff-heart">❤️</div>
           </div>
@@ -1327,7 +1365,7 @@ footer a { color:var(--p); text-decoration:none; }
           <div class="ff-sec-t">🎮 My Loadout</div>
           <div class="ff-loadout-grid">
             <!-- ✏️ Loadout badlo -->
-            <div class="ff-l-box"><div class="ff-l-lbl">Character</div><div class="ff-l-val">Chrono 💠</div></div>
+            <div class="ff-l-box"><div class="ff-l-lbl">Character</div><div class="ff-l-val">Kelly 💠</div></div>
             <div class="ff-l-box"><div class="ff-l-lbl">Weapon</div><div class="ff-l-val">M1887 🔫</div></div>
             <div class="ff-l-box"><div class="ff-l-lbl">Pet</div><div class="ff-l-val">Falco 🦅</div></div>
             <div class="ff-l-box"><div class="ff-l-lbl">Mode</div><div class="ff-l-val">BR Ranked 🏆</div></div>
@@ -1439,11 +1477,11 @@ footer a { color:var(--p); text-decoration:none; }
         Open to freelance projects, collaborations, and full-time opportunities. Drop a message and I'll get back within 24 hours. 🚀
       </div>
 
-      <a href="mailto:sidhi@example.com" class="contact-item" style="text-decoration:none;cursor:pointer;">
+      <a href="mailto: ashukr3384@gmail.com" class="contact-item" style="text-decoration:none;cursor:pointer;">
         <div class="contact-icon">📧</div>
         <div>
           <div class="contact-label">EMAIL — Click to open</div>
-          <div class="contact-val" style="color:var(--p);">sidhi@example.com ↗</div>
+          <div class="contact-val" style="color:var(--p);">ashukr3384@gmail.com ↗</div>
         </div>
       </a>
       <div class="contact-item">
@@ -1457,7 +1495,7 @@ footer a { color:var(--p); text-decoration:none; }
         <div class="contact-icon">📍</div>
         <div>
           <div class="contact-label">LOCATION</div>
-          <div class="contact-val">India 🇮🇳 · Remote OK</div>
+          <div class="contact-val">NALANDA 🇮🇳 · Remote OK</div>
         </div>
       </div>
       <div class="contact-item">
@@ -1490,7 +1528,7 @@ footer a { color:var(--p); text-decoration:none; }
 
 <!-- FOOTER -->
 <footer>
-  <div style="margin-bottom:.6rem;">Built with ❤️ by <a href="https://github.com/SIDHIMUSIC">SIDHI</a> · <span id="f-yr"></span></div>
+  <div style="margin-bottom:.6rem;">Built with ❤️ by <a href="https://www.instagram.com/harryashu_">HARRY</a> · <span id="f-yr"></span></div>
   <div style="font-size:.62rem;">Made with passion, caffeine & countless iterations 🔥</div>
   <div class="f-socials">
     <a href="https://github.com/SIDHIMUSIC" target="_blank" class="f-si f-gh" title="GitHub">
@@ -2190,6 +2228,23 @@ function ffCopyUID(){
   if(sec) observer.observe(sec);
 })();
 
+// ================================================================
+//  FF LIGHTBOX — Tap to Zoom Profile Pic
+// ================================================================
+function openFfLightbox(){
+  const lb = document.getElementById('ff-lightbox');
+  // sync src from the card image
+  const cardImg = document.querySelector('.ff-av-inner img');
+  if(cardImg && cardImg.src) document.getElementById('ff-lb-img').src = cardImg.src;
+  lb.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeFfLightbox(){
+  document.getElementById('ff-lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+// ESC key to close
+document.addEventListener('keydown', e => { if(e.key==='Escape') closeFfLightbox(); });
+
 </script>
-</body>
 </html>
